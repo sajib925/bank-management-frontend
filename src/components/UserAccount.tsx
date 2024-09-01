@@ -15,8 +15,8 @@ interface NormalUserFormValues {
   nid: string;
   age: string;
   monthly_income: string;
-  religion: string;
-  account_type: string;
+  // religion: string;
+  // account_type: string;
 }
 
 export const NormalUser = () => {
@@ -28,8 +28,8 @@ export const NormalUser = () => {
       nid: "",
       age: "",
       monthly_income: "",
-      religion: "",
-      account_type: "",
+      // religion: "",
+      // account_type: "",
     },
   });
 
@@ -131,7 +131,7 @@ export const NormalUser = () => {
                 />
                 {errors.monthly_income && <span>{errors.monthly_income.message}</span>}
               </div>
-              <div className="pb-5 flex flex-col gap-3">
+              {/* <div className="pb-5 flex flex-col gap-3">
                 <Label className="text-base">Religion:</Label>
                 <Input
                   type="text"
@@ -148,10 +148,10 @@ export const NormalUser = () => {
                   placeholder="Account Type"
                 />
                 {errors.account_type && <span>{errors.account_type.message}</span>}
-              </div>
+              </div> */}
               <div className="flex justify-end">
                 <Button type="submit" className="w-full" disabled={mutation.isLoading}>
-                  {mutation.isLoading ? "Loading..." : "Create Patient"}
+                  {mutation.isLoading ? "Loading..." : "Create Customer"}
                 </Button>
               </div>
             </form>

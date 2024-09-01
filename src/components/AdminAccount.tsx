@@ -14,7 +14,7 @@ interface AdminFormValues {
   mobile_no: string;
   nid: string;
   age: string;
-  religion: string;
+  // religion: string;
 }
 
 export const AdminUser = () => {
@@ -25,7 +25,7 @@ export const AdminUser = () => {
       mobile_no: "",
       nid: "",
       age: "",
-      religion: "",
+      // religion: "",
     },
   });
 
@@ -99,7 +99,7 @@ export const AdminUser = () => {
     <div className="max-w-[1000px] w-full mx-auto">
       <Card>
         <CardHeader>
-          <CardTitle className="text-center text-xl">Create Admin User Account</CardTitle>
+          <CardTitle className="text-center text-xl">Create Manager Account</CardTitle>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="pb-5 flex flex-col gap-3">
@@ -132,7 +132,7 @@ export const AdminUser = () => {
                 {errors.age && <span>{errors.age.message}</span>}
               </div>
 
-              <div className="pb-5 flex flex-col gap-3">
+              {/* <div className="pb-5 flex flex-col gap-3">
                 <Label className="text-base">Religion:</Label>
                 <Input
                   type="text"
@@ -140,11 +140,11 @@ export const AdminUser = () => {
                   placeholder="Religion"
                 />
                 {errors.religion && <span>{errors.religion.message}</span>}
-              </div>
+              </div> */}
 
               <div className="flex justify-end">
                 <Button type="submit" className="w-full" disabled={mutation.isLoading}>
-                  {mutation.isLoading ? "Loading..." : "Create Admin User"}
+                  {mutation.isLoading ? "Loading..." : "Create Manager"}
                 </Button>
               </div>
             </form>

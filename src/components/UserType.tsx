@@ -9,19 +9,19 @@ import { NormalUser } from "./UserAccount";
 export const UserType = () => {
   return (
     <div className="max-w-screen-xl h-screen w-full mx-auto my-10 lg:my-20 px-5">
-      <div className="grid items-center grid-cols-1 lg:grid-cols-2 gap-6">
-        <Image src={"/image/users.jpg"} width={600} height={500} alt="login" />
+      <div className="grid items-center lg:justify-between grid-cols-1 lg:grid-cols-2 gap-6">
+        <Image src={"/image/userType.png"} width={600} height={500} alt="login" />
     <div className="">
       <h1 className="text-2xl font-semibold pb-3">What type of account do you need?</h1>
-      <Tabs defaultValue="patient" className="w-full">
+      <Tabs defaultValue="customer" className="w-full">
         <TabsList className="flex items-center justify-center">
-          <TabsTrigger value="patient">User</TabsTrigger>
-          <TabsTrigger value="doctor">Admin</TabsTrigger>
+          <TabsTrigger value="customer">Customer</TabsTrigger>
+          <TabsTrigger value="manager">Manager</TabsTrigger>
         </TabsList>
-        <TabsContent value="patient">
+        <TabsContent value="customer">
           <NormalUser />
         </TabsContent>
-        <TabsContent value="doctor">
+        <TabsContent value="manager">
           <AdminUser />
         </TabsContent>
         <Button className="w-full my-6" asChild>

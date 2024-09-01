@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
           const userData = await response.json();
           setUserData(userData);
         } catch (error) {
-          toast.error('Failed to fetch user data');
+          // toast.error('Failed to fetch user data');
         }
       }
     };
