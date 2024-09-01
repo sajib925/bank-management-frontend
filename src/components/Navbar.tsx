@@ -34,6 +34,7 @@ const navSubLinks: NavLink[] = [
 const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { userData, setUserData } = useUserContext();
 
   useEffect(() => {
@@ -61,6 +62,22 @@ const Navbar: React.FC = () => {
     fetchUserData();
   }, [setUserData]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const logoutMutation = useLogout();
 
   const handleLogout = () => {
@@ -76,7 +93,13 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900 sticky top-0 z-40">
+    <nav
+      className={`bg-white border-gray-200 dark:bg-gray-900 sticky top-0 z-40 transition-all duration-300 ${
+        isScrolled
+          ? "py-8 shadow-lg" // Add box shadow and increase padding when scrolled
+          : "py-4 shadow-none" // Reset padding and remove shadow when at the top
+      }`}
+    >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
@@ -94,7 +117,7 @@ const Navbar: React.FC = () => {
               >
                 <Image
                   className="w-8 h-8 rounded-full"
-                  src="/docs/images/people/profile-picture-3.jpg"
+                  src="/image/profi.png"
                   alt="user photo"
                   width={25}
                   height={25}
@@ -127,8 +150,18 @@ const Navbar: React.FC = () => {
             </>
           ) : (
             <>
-              <Link href={"/signIn"} className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer lg:mr-2">Sign In</Link>
-              <Link href={"/signUp"} className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer">Sign Up</Link>
+              <Link
+                href={"/signIn"}
+                className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer lg:mr-2"
+              >
+                Sign In
+              </Link>
+              <Link
+                href={"/signUp"}
+                className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer"
+              >
+                Sign Up
+              </Link>
             </>
           )}
 

@@ -6,16 +6,16 @@ import { IoMdCheckmark } from "react-icons/io";
 const FeaturesSection = () => {
   return (
     <section className="features-section">
-      <div className="overlay pt-28">
+      <div className="overlay pt-10 lg:pt-28">
         <div className="container mx-auto animate-fadeInUp">
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap gap-6 lg:gap-0">
             <div className="w-full lg:w-1/2">
               <div className="top-section">
                 <span className="w-[60px] h-[60px] rounded-full bg-[#1a4dbe] lg:mb-7 flex justify-center items-center mb-4">
                   <AiFillBell className="text-white h-6 w-5" />
                 </span>
-                <h5 className="font-semibold text-[#055c2d] text-xl mb-8">Smart Banking</h5>
-                <h2 className="text-6xl font-bold mb-4">
+                <h5 className="subTitle">Smart Banking</h5>
+                <h2 className="title">
                   Real-time Notifications
                 </h2>
                 <p className="mt-4 text-[18px] text-gray-700">
@@ -25,17 +25,17 @@ const FeaturesSection = () => {
                   their needs.`}
                 </p>
                 <ul className="list mt-5">
-                  <li className="flex items-center mb-4">
-                    <span className="w-6 h-6 rounded-full bg-[#055c2d] flex items-center justify-center mr-2">
+                  <li className="flex items-center gap-2 mb-4">
+                    <span className="min-w-6 h-6 rounded-full bg-[#055c2d] flex items-center justify-center">
                       <IoMdCheckmark className="text-white" />
                     </span>
-                    <span className="text-[18px] font-medium flex items-center justify-center mr-2">Cards that work all across the world.</span>
+                    <span className="text-[18px] font-medium">Cards that work all across the world.</span>
                   </li>
-                  <li className="flex items-center">
-                  <span className="w-6 h-6 rounded-full bg-[#055c2d] flex items-center justify-center mr-2">
+                  <li className="flex items-center gap-2 mb-4">
+                  <span className="min-w-6 h-6 rounded-full bg-[#055c2d] flex items-center justify-center">
                       <IoMdCheckmark className="text-white" />
                     </span>
-                    <span className="text-[18px] font-medium flex items-center justify-center mr-2">No ATM fees. No minimum balance. No overdrafts.</span>
+                    <span className="text-[18px] font-medium">No ATM fees. No minimum balance. No overdrafts.</span>
                   </li>
                 </ul>
               </div>

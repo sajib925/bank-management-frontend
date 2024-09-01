@@ -1,5 +1,6 @@
 "use client";
 
+import useLenis from "@/lib/useLenis";
 import { QueryClientProvider, QueryClient } from "react-query";
 
 export default function ClientProvider({
@@ -7,6 +8,7 @@ export default function ClientProvider({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // useLenis();
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>

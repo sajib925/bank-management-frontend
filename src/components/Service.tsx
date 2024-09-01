@@ -20,11 +20,11 @@ export const Service = () => {
   return (
     <div className="py-10 lg:py-20 px-5">
       <div className="mx-auto w-full max-w-screen-xl">
-        <div className="mb-6 md:mb-10">
-            <span className="text-sm text-gray-500 font-medium text-center md:text-start block mb-2">
+        <div className="mb-6 md:mb-20 max-w-[700px] mx-auto">
+            <span className="subTitle text-center block">
               SERVICES
             </span>
-            <h2 className="scroll-m-20 text-center md:text-start justify-center md:justify-between text-3xl font-bold">
+            <h2 className="title text-center">
               Explore Our Range of Essential Services
             </h2>
         </div>

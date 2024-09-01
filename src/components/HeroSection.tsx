@@ -7,16 +7,16 @@ const HeroSection: React.FC = () => {
   return (
     <div>
       {/* Banner Section */}
-      <section className="relative">
+      <section className="relative py-10 lg:py-0">
         <div
           className="absolute inset-0 hidden lg:block bg-[#f5faff] bg-[url('/image/banner-bg.png')] bg-no-repeat bg-auto bg-right bg-right-bottom-90"
         ></div>
-        <div className="relative z-10 flex items-center h-screen">
+        <div className="relative z-10 flex items-center lg:h-screen">
           <div className="container mx-auto">
             <div className="flex justify-start">
               <div className="lg:w-7/12 md:w-10/12">
                 <div className="text-dark space-y-6">
-                  <h4 className="text-lg font-medium">Simple. Transparent. Secure</h4>
+                  <h4 className="text-lg font-medium text-[#055c2d]">Simple. Transparent. Secure</h4>
                   <h1 className="text-4xl font-bold">Banking Solutions</h1>
                   <p className="text-xl">
                     Products and services designed to help you reach your financial goals.

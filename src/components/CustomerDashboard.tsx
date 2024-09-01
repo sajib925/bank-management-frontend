@@ -7,10 +7,10 @@ import { Card } from "./ui/card";
 import { useUserContext } from "@/context/userContext";
 import { Input } from "./ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { toast } from "sonner";
 
 const API_URL = "https://bank-management-backend.onrender.com/api";
 
-// Creating an axios instance
 const axiosInstance = axios.create({
   baseURL: API_URL,
   headers: {
@@ -18,7 +18,6 @@ const axiosInstance = axios.create({
   },
 });
 
-// Custom hook to manage the token state and update axios headers
 const useAuthToken = () => {
   const [token, setToken] = useState<string | null>(null);
 
@@ -71,13 +70,33 @@ const fetchCustomers = async () => {
   return response.data;
 };
 
-// Custom Hooks
-const useDeposit = () => useMutation(depositMoney);
-const useWithdraw = () => useMutation(withdrawMoney);
-const useLoanRequest = () => useMutation(requestLoan);
+// const useDeposit = () => useMutation(depositMoney);
+const useDeposit = () => useMutation(depositMoney, {
+  onSuccess: () => {
+    toast.success("Deposit successful!")
+  },
+});
+// const useWithdraw = () => useMutation(withdrawMoney);
+const useWithdraw = () => useMutation(withdrawMoney, {
+  onSuccess: () => {
+    toast.success("Withdrawal successful!")
+  },
+});
+// const useLoanRequest = () => useMutation(requestLoan);
+const useLoanRequest = () => useMutation(requestLoan, {
+  onSuccess: () => {
+    toast.success("Loan request successful!")
+  },
+});
 const useTransactions = () => useQuery("transactions", fetchTransactions);
 const useLoans = () => useQuery("loans", fetchLoans);
-const usePayLoan = () => useMutation(payLoan);
+// const usePayLoan = () => useMutation(payLoan);
+const usePayLoan = () => useMutation(payLoan, {
+  onSuccess: () => {
+    toast.success("Loan payment successful!");
+  },
+});
+
 const useCustomers = () => useQuery("customers", fetchCustomers);
 
 const CustomerDashboard: React.FC = () => {

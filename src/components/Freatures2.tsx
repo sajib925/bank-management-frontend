@@ -5,10 +5,10 @@ import { IoMdCheckmark } from "react-icons/io";
 
 const FeaturesSection2 = () => {
   return (
-    <section className="features-section">
+    <section className="">
       <div className="overlay pt-28">
         <div className="container mx-auto animate-fadeInUp">
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap gap-6 lg:gap-0">
             <div className="w-full lg:w-1/2 flex justify-between">
               <div className="img-area">
                 <Image
@@ -26,29 +26,29 @@ const FeaturesSection2 = () => {
                 <span className="w-[60px] h-[60px] rounded-full bg-[#1a4dbe] lg:mb-7 flex justify-center items-center mb-4">
                   <AiFillBell className="text-white h-6 w-5" />
                 </span>
-                <h5 className="font-semibold text-[#055c2d] text-xl mb-8">
+                <h5 className="subTitle">
                   Safe Investments
                 </h5>
-                <h2 className="text-6xl font-bold mb-4">
+                <h2 className="title">
                   The Better Way to Save & Invest
                 </h2>
                 <p className="mt-4 text-[18px] text-gray-700">
                   {` Bankio helps over 2 million customers achieve their financial goals by helping them save and invest with ease. Put that extra cash to use without putting it at risk with Bankio.`}
                 </p>
                 <ul className="list mt-5">
-                  <li className="flex items-center mb-4">
-                    <span className="w-6 h-6 rounded-full bg-[#055c2d] flex items-center justify-center mr-2">
+                  <li className="flex items-center gap-2 mb-4">
+                    <span className="min-w-6 h-6 rounded-full bg-[#055c2d] flex items-center justify-center">
                       <IoMdCheckmark className="text-white" />
                     </span>
-                    <span className="text-[18px] font-medium flex items-center justify-center mr-2">
+                    <span className="text-[18px] font-medium">
                       Profitable to invest and Handy to manage
                     </span>
                   </li>
-                  <li className="flex items-center">
-                    <span className="w-6 h-6 rounded-full bg-[#055c2d] flex items-center justify-center mr-2">
+                  <li className="flex items-center gap-2">
+                    <span className="min-w-6 h-6 rounded-full bg-[#055c2d] flex items-center justify-center">
                       <IoMdCheckmark className="text-white" />
                     </span>
-                    <span className="text-[18px] font-medium flex items-center justify-center mr-2">
+                    <span className="text-[18px] font-medium">
                       Highest Returns on your investments
                     </span>
                   </li>
