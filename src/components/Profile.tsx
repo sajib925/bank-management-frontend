@@ -35,7 +35,6 @@ const UserProfile: React.FC = () => {
   const { userData, setUserData } = useUserContext();
   const [modalClose, setModalClose] = useState(false);
   const [modalClosePass, setModalClosePass] = useState(false);
-  
 
   const {
     register,
@@ -153,13 +152,20 @@ const UserProfile: React.FC = () => {
   const name = `${userData.first_name} ${userData.last_name}`;
 
   return (
-    <div className="max-w-screen-xl w-full mx-auto my-10 lg:my-20 px-5">
+    <div className="max-w-screen-xl w-full mx-auto px-5">
+      <h1 className="py-3 text-2xl lg:text-3xl font-bold text-center">
+        <span className="block text-center">Hello {name}!</span> Welcome to your
+        Profile
+      </h1>
+      <p className="text-xl text-gray-700 mb-5 text-center">Manage your personal information, update details, and view account activity seamlessly.</p>
       <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-y-4 gap-x-20">
-        <Image src={"/image/profile.jpg"} width={400} height={300} alt="login" />
+        <Image
+          src={"/image/profile.jpg"}
+          width={400}
+          height={300}
+          alt="login"
+        />
         <div>
-          <h3 className="py-3 mb-5 text-2xl lg:text-3xl font-bold text-center">
-            Hello {name}! Welcome to your Profile
-          </h3>
           <Card>
             <div className="relative h-[150px] w-full rounded-t-sm bg-primary">
               <Image
@@ -170,7 +176,7 @@ const UserProfile: React.FC = () => {
                 height={250}
               />
             </div>
-            <CardHeader className="px-0 pb-0 pt-20 text-center text-xl lg:text-2xl font-bold">
+            <CardHeader className="px-0 pb-0 pt-28 text-center text-xl lg:text-2xl font-bold">
               {name}
             </CardHeader>
             <CardHeader className="px-0 pb-0 pt-3 text-center text-xl lg:text-2xl font-bold">
@@ -179,7 +185,7 @@ const UserProfile: React.FC = () => {
             <CardDescription className="pt-2 text-center text-xl lg:text-2xl font-semibold">
               User
             </CardDescription>
-            <CardFooter className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+            <CardFooter className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-8">
               <Dialog onOpenChange={setModalClose} open={modalClose}>
                 <DialogTrigger className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer">
                   Update Profile
@@ -225,52 +231,54 @@ const UserProfile: React.FC = () => {
                 </DialogContent>
               </Dialog>
               <Dialog onOpenChange={setModalClosePass} open={modalClosePass}>
-                <DialogTrigger className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer">Update Password</DialogTrigger>
+                <DialogTrigger className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer">
+                  Update Password
+                </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Update Your Password</DialogTitle>
                     <form onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
-                    <div className="pb-5 flex flex-col gap-3">
-                      <Label>New Password:</Label>
-                      <Input
-                        type="password"
-                        id="new_password"
-                        {...registerPassword("new_password", {
-                          required: true,
-                        })}
-                        placeholder="New Password"
-                      />
-                    </div>
-                    <div className="pb-5 flex flex-col gap-3">
-                      <Label>Confirm New Password:</Label>
-                      <Input
-                        type="password"
-                        id="confirm_password"
-                        {...registerPassword("confirm_password", {
-                          required: true,
-                        })}
-                        placeholder="Confirm Password"
-                      />
-                    </div>
-                    <div className="pb-5 flex flex-col gap-3">
-                      <Label>Old Password:</Label>
-                      <Input
-                        type="password"
-                        id="old_password"
-                        {...registerPassword("old_password", {
-                          required: true,
-                        })}
-                        placeholder="Old Password"
-                      />
-                    </div>
-                    <Button
-                      type="submit"
-                      className="w-full"
-                      disabled={isUpdatingPassword}
-                    >
-                      {isUpdatingPassword ? "Updating..." : "Update Password"}
-                    </Button>
-                  </form>
+                      <div className="pb-5 flex flex-col gap-3">
+                        <Label>New Password:</Label>
+                        <Input
+                          type="password"
+                          id="new_password"
+                          {...registerPassword("new_password", {
+                            required: true,
+                          })}
+                          placeholder="New Password"
+                        />
+                      </div>
+                      <div className="pb-5 flex flex-col gap-3">
+                        <Label>Confirm New Password:</Label>
+                        <Input
+                          type="password"
+                          id="confirm_password"
+                          {...registerPassword("confirm_password", {
+                            required: true,
+                          })}
+                          placeholder="Confirm Password"
+                        />
+                      </div>
+                      <div className="pb-5 flex flex-col gap-3">
+                        <Label>Old Password:</Label>
+                        <Input
+                          type="password"
+                          id="old_password"
+                          {...registerPassword("old_password", {
+                            required: true,
+                          })}
+                          placeholder="Old Password"
+                        />
+                      </div>
+                      <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={isUpdatingPassword}
+                      >
+                        {isUpdatingPassword ? "Updating..." : "Update Password"}
+                      </Button>
+                    </form>
                   </DialogHeader>
                 </DialogContent>
               </Dialog>

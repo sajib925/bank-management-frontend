@@ -10,14 +10,20 @@ interface UserData {
   last_name: string;
 }
 
-interface NormalUserData {
+
+interface CustomerData {
   id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
+  user: number;
+  balance: string;
+  mobile_no: string;
+  nid: string;
+  age: string;
+  monthly_income: string;
+  account_no: string;
 }
 
-interface AdminUserData {
+
+interface ManagerData {
   id: number;
   email: string;
   first_name: string;
@@ -32,12 +38,12 @@ type Service = {
 
 type ContextProps ={
   userData: UserData;
-  normalUserData: NormalUserData[];
-  adminUserData: NormalUserData[];
+  customerData: CustomerData[];
+  managerData: ManagerData[];
   services: Service[];
   setUserData: React.Dispatch<React.SetStateAction<UserData>>;
-  setAdminUserData: React.Dispatch<React.SetStateAction<NormalUserData[]>>;
-  setNormalUserData: React.Dispatch<React.SetStateAction<NormalUserData[]>>;
+  setManagerData: React.Dispatch<React.SetStateAction<ManagerData[]>>;
+  setCustomerData: React.Dispatch<React.SetStateAction<CustomerData[]>>;
   setServices: React.Dispatch<React.SetStateAction<Service[]>>;
 }
 
@@ -58,12 +64,12 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     first_name: '',
     last_name: '',
   });
-  const [normalUserData, setNormalUserData] = useState<NormalUserData[]>([]);
-  const [adminUserData, setAdminUserData] = useState<AdminUserData[]>([]);
+  const [customerData, setCustomerData] = useState<CustomerData[]>([]);
+  const [managerData, setManagerData] = useState<ManagerData[]>([]);
   const [services, setServices] = useState<Service[]>([]);
 
   return (
-    <UserContext.Provider value={{ userData, normalUserData, adminUserData, setUserData, services, setNormalUserData, setAdminUserData, setServices }}>
+    <UserContext.Provider value={{ userData, customerData, managerData,  services, setUserData, setCustomerData, setManagerData, setServices }}>
       {children}
     </UserContext.Provider>
   );

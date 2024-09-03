@@ -5,8 +5,8 @@ import { IoMdCheckmark } from "react-icons/io";
 
 const FeaturesSection2 = () => {
   return (
-    <section className="">
-      <div className="overlay pt-28">
+    <section className="py-16 lg:py-28">
+      <div className="overlay ">
         <div className="container mx-auto animate-fadeInUp">
           <div className="flex flex-wrap gap-6 lg:gap-0">
             <div className="w-full lg:w-1/2 flex justify-between">

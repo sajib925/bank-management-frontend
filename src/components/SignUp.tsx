@@ -150,8 +150,10 @@ const SignUp: React.FC = () => {
           <button
             type="submit"
             className="py-3.5 px-7 text-sm font-semibold tracking-wider rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+            disabled={mutation.isLoading}
           >
-            Sign up
+            {mutation.isLoading ? "Loading..." : "Sign up"}
+            
           </button>
         </div>
       </form>

@@ -4,7 +4,6 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import useLogout from "./SignOut";
 import { useUserContext } from "@/context/userContext";
-import { toast } from "sonner"; // Ensure this import is correct and `sonner` is installed
 
 interface NavLink {
   href: string;
@@ -28,14 +27,16 @@ const navLinks: NavLink[] = [
 
 const navSubLinks: NavLink[] = [
   { href: "/profile", label: "Profile", current: true },
-  { href: "/dashboard", label: "Dashboard" },
 ];
+
+
 
 const Navbar: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { userData, setUserData } = useUserContext();
+  const { userData, managerData, customerData, setUserData, setCustomerData, setManagerData } = useUserContext();
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -54,13 +55,47 @@ const Navbar: React.FC = () => {
           const userData = await response.json();
           setUserData(userData);
         } catch (error) {
-          // toast.error('Failed to fetch user data');
+        }
+      }
+    };
+
+    const fetchManagerData = async () => {
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        try {
+          const response = await fetch("https://bank-management-backend.onrender.com/api/account/manager", {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          });
+          const managerData = await response.json();
+          setManagerData(managerData);
+        } catch (error) {
+        }
+      }
+    };
+    const fetchCustomerData = async () => {
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        try {
+          const response = await fetch("https://bank-management-backend.onrender.com/api/account/customer", {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          });
+          const customerData = await response.json();
+          setCustomerData(customerData);
+        } catch (error) {
         }
       }
     };
 
     fetchUserData();
-  }, [setUserData]);
+    fetchCustomerData()
+    fetchManagerData()
+  }, [setUserData, setCustomerData, setManagerData]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -92,12 +127,17 @@ const Navbar: React.FC = () => {
     setIsNavOpen(!isNavOpen);
   };
 
+  const isCustomer = customerData?.some((c: any) => c.user === userData.id);
+  const isManager = managerData?.some((m: any) => m.user === userData.id);
+  console.log(customerData);
+  console.log(userData);
+
   return (
     <nav
       className={`bg-white border-gray-200 dark:bg-gray-900 sticky top-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? "py-8 shadow-lg" // Add box shadow and increase padding when scrolled
-          : "py-4 shadow-none" // Reset padding and remove shadow when at the top
+          ? "py-2 shadow-lg" 
+          : " shadow-none" 
       }`}
     >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -139,6 +179,11 @@ const Navbar: React.FC = () => {
                         </Link>
                       </li>
                     ))}
+                    <li>
+                      <Link href={isManager? "/managerDashboard" : isCustomer ? "/customerDashboard": "/userType"} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white cursor-pointer">
+                        Dashboard
+                      </Link>
+                    </li>
                     <li onClick={handleLogout}>
                       <span className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white cursor-pointer">
                         Logout

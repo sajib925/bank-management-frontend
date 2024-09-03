@@ -1,26 +1,25 @@
-"use client"
+"use client";
 import { useMutation, useQueryClient } from "react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useUserContext } from "@/context/userContext";
 
 const useLogout = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { setUserData } = useUserContext();
 
   return useMutation({
     mutationFn: async () => {
       const authToken = window.localStorage.getItem("authToken");
 
-      const response = await fetch(
-        "https://bank-management-backend.onrender.com/api/auth/logout/",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Token ${authToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch("https://bank-management-backend.onrender.com/api/auth/logout/", {
+        method: "POST",
+        headers: {
+          Authorization: `Token ${authToken}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -30,8 +29,15 @@ const useLogout = () => {
       return response.json();
     },
     onSuccess: () => {
+      // Clear auth token and user data
       window.localStorage.removeItem("authToken");
-      queryClient.clear(); 
+      queryClient.clear();
+      setUserData({
+        id: 0,
+        email: '',
+        first_name: '',
+        last_name: '',
+      });  
       toast.success("Logout successfully");
       router.push("/signIn");
     },

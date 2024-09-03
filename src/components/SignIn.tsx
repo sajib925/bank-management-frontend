@@ -1,6 +1,6 @@
 "use client"
 import { useUserContext } from '@/context/userContext';
-import { fetchUserData } from '@/logic/apiService';
+import { fetchCustomerData, fetchManagerData, fetchUserData } from '@/logic/apiService';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -15,7 +15,7 @@ interface FormData {
 
 const SignIn: React.FC = () => {
   const router = useRouter();
-  const { setUserData} = useUserContext();
+  const { setUserData, setCustomerData, setManagerData } = useUserContext();
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
   const loginMutation = useMutation(
@@ -30,12 +30,24 @@ const SignIn: React.FC = () => {
     {
       onSuccess: async (token) => {
         window.localStorage.setItem('authToken', token);
-        router.push("/")
-        toast.success('Login successfully');
-
+        
         try {
           const userData = await fetchUserData(token);
+          const customerData = await fetchCustomerData(token);
+          const managerData = await fetchManagerData(token);
           setUserData(userData);
+          setCustomerData(customerData)
+          setManagerData(managerData)
+          const isCustomer = customerData?.some((c: any) => c.user === userData.id);
+          const isManager = managerData?.some((m: any) => m.user === userData.id);
+          if(isManager) {
+            router.push("/managerDashboard")
+          } else if (isCustomer) {
+            router.push("/customerDashboard")
+          } else {
+            router.push("/userType")
+          }
+          toast.success('Login successfully');
         } catch (error) {
           toast.error('Failed to fetch user data');
         }
@@ -54,10 +66,10 @@ const SignIn: React.FC = () => {
     }
   );
 
+  
+
   const onSubmit = (formData: FormData) => {
     loginMutation.mutate(formData);
-    // console.log(formData);
-    
   };
 
   return (
@@ -129,8 +141,10 @@ const SignIn: React.FC = () => {
                 <button
                   type="submit"
                   className="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                  disabled={loginMutation.isLoading}
                 >
-                  Log in
+                  {loginMutation.isLoading ? "Loading..." : " Log in"}
+                 
                 </button>
               </div>
 

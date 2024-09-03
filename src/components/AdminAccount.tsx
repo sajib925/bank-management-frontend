@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { fetchAdminUserData, fetchUserData } from "@/logic/apiService";
+import {  fetchManagerData, fetchUserData } from "@/logic/apiService";
 import { useUserContext } from "@/context/userContext";
 
 interface AdminFormValues {
@@ -18,7 +18,7 @@ interface AdminFormValues {
 }
 
 export const AdminUser = () => {
-  const { userData ,setUserData, adminUserData, setAdminUserData } = useUserContext();
+  const { userData ,setUserData, managerData, setManagerData} = useUserContext();
   const router = useRouter();
   const { register, handleSubmit, formState: { errors } } = useForm<AdminFormValues>({
     defaultValues: {
@@ -58,18 +58,18 @@ export const AdminUser = () => {
       toast.success("Manager created successfully");
       router.push("/");
 
-      const [ adminUserData] = await Promise.all([
-        fetchAdminUserData(token),
+      const [ managerData] = await Promise.all([
+        fetchManagerData(token),
       ]);
 
 
-      const adminData = adminUserData.find((d:any) => d.user === userData.id) ?? null;
+      const adminData = managerData.find((d:any) => d.user === userData.id) ?? null;
 
-      setAdminUserData(adminData);
+      setManagerData(adminData);
 
 
-      if (adminUserData?.id) {
-        router.push("/");
+      if (managerData?.id) {
+        router.push("/managerDashboard");
       } else {
         router.push("/userType");
       }

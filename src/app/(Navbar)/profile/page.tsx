@@ -3,7 +3,9 @@ import React from 'react'
 
 const profile = () => {
   return (
-    <UserProfile />
+    <div className="pt-12 lg:pt-24">
+      <UserProfile />
+    </div>
   )
 }
 

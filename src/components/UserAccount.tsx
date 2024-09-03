@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { fetchNormalUserData, fetchUserData } from "@/logic/apiService";
+import {  fetchCustomerData, fetchUserData } from "@/logic/apiService";
 import { useUserContext } from "@/context/userContext";
 
 interface NormalUserFormValues {
@@ -20,7 +20,7 @@ interface NormalUserFormValues {
 }
 
 export const NormalUser = () => {
-  const {userData, setUserData , normalUserData, setNormalUserData} = useUserContext();
+  const {userData, setUserData, customerData, setCustomerData } = useUserContext();
   const router = useRouter();
   const { register, handleSubmit, formState: { errors } } = useForm<NormalUserFormValues>({
     defaultValues: {
@@ -44,13 +44,6 @@ export const NormalUser = () => {
         },
         body: JSON.stringify(formData),
       });
-
-      // if (!res.ok) {
-      //   const errorData = await res.json();
-      //   throw new Error(errorData.detail || "Error creating Patient Account");
-      // }
-
-      // return res.json();
     },
     onSuccess: async () => {
       const token = window.localStorage.getItem("authToken");
@@ -60,20 +53,20 @@ export const NormalUser = () => {
       }
       toast.success("Customer Account created successfully");
       router.push("/");
-      const [ normalUserData] = await Promise.all([
-        fetchNormalUserData(token),
+      const [ customerData] = await Promise.all([
+        fetchCustomerData(token),
       ]);
 
 
-      const normalData =
-        normalUserData.find((d:any) => d.user === userData.id) ?? null;
+      const customer =
+        customerData.find((d:any) => d.user === userData.id) ?? null;
 
-      setNormalUserData(normalData);
+      setCustomerData(customer);
 
       try {
         const userData = await fetchUserData(token);
         setUserData(userData);
-        router.push("/");
+        router.push("/customerDashboard");
       } catch (error) {
         toast.error("Failed to fetch user data");
         router.push("/error");
