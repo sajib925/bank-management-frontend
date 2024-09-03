@@ -38,8 +38,8 @@ const SignIn: React.FC = () => {
           setUserData(userData);
           setCustomerData(customerData)
           setManagerData(managerData)
-          const isCustomer = customerData?.some((c: any) => c.user === userData.id);
-          const isManager = managerData?.some((m: any) => m.user === userData.id);
+          const isCustomer = Array.isArray(customerData) && customerData.some((c: any) => c.user === userData.id);
+          const isManager = Array.isArray(managerData) && managerData.some((m: any) => m.user === userData.id);
           if(isManager) {
             router.push("/managerDashboard")
           } else if (isCustomer) {

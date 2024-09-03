@@ -127,10 +127,8 @@ const Navbar: React.FC = () => {
     setIsNavOpen(!isNavOpen);
   };
 
-  const isCustomer = customerData?.some((c: any) => c.user === userData.id);
-  const isManager = managerData?.some((m: any) => m.user === userData.id);
-  console.log(customerData);
-  console.log(userData);
+  const isCustomer = Array.isArray(customerData) && customerData.some((c: any) => c.user === userData.id);
+  const isManager = Array.isArray(managerData) && managerData.some((m: any) => m.user === userData.id);
 
   return (
     <nav
