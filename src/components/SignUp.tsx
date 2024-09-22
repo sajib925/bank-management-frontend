@@ -153,7 +153,7 @@ const SignUp: React.FC = () => {
             disabled={mutation.isLoading}
           >
             {mutation.isLoading ? "Loading..." : "Sign up"}
-            
+
           </button>
         </div>
       </form>

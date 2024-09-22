@@ -32,10 +32,15 @@ interface UserProfileData {
 }
 
 const UserProfile: React.FC = () => {
+  const {managerData,customerData} = useUserContext()
   const { userData, setUserData } = useUserContext();
   const [modalClose, setModalClose] = useState(false);
   const [modalClosePass, setModalClosePass] = useState(false);
 
+  const manager = managerData.find((m) => m.user === userData.id);
+  const customer = customerData.find((c) => c.user === userData.id);
+  console.log(manager)
+  console.log(customer)
   const {
     register,
     handleSubmit: handleProfileSubmit,
@@ -150,6 +155,7 @@ const UserProfile: React.FC = () => {
   };
 
   const name = `${userData.first_name} ${userData.last_name}`;
+  console.log(userData)
 
   return (
     <div className="max-w-screen-xl w-full mx-auto px-5">
@@ -168,23 +174,53 @@ const UserProfile: React.FC = () => {
         <div>
           <Card>
             <div className="relative h-[150px] w-full rounded-t-sm bg-primary">
-              <Image
-                className="absolute left-[50%] top-[0%] -translate-x-[50%] transform rounded-full"
-                src={"/image/profi.png"}
-                alt={"avatar"}
-                width={250}
-                height={250}
-              />
+              {
+                manager ? (
+                    <Image
+                        className="absolute left-[50%] top-[0%] -translate-x-[50%] transform rounded-full"
+                        src={manager.image || "/image/profi.png"}
+                        alt={"avatar"}
+                        width={250}
+                        height={250}
+                    />
+                ) : customer ? (
+                    <Image
+                        className="absolute left-[50%] top-[0%] -translate-x-[50%] transform rounded-full"
+                        src={customer.image || "/image/profi.png"}
+                        alt={"avatar"}
+                        width={250}
+                        height={250}
+                    />
+                ) : (
+                    <Image
+                        className="absolute left-[50%] top-[0%] -translate-x-[50%] transform rounded-full"
+                        src={"/image/profi.png"}
+                        alt={"avatar"}
+                        width={250}
+                        height={250}
+                    />
+                )
+              }
+
             </div>
             <CardHeader className="px-0 pb-0 pt-28 text-center text-xl lg:text-2xl font-bold">
               {name}
             </CardHeader>
+
+            <CardDescription className="pt-2 text-center text-xl lg:text-2xl font-semibold">
+              {
+                customer ? (
+                    customer.account_type
+                ) : manager ? (
+                    "Manager"
+                ) : (
+                    "User"
+                )
+              }
+            </CardDescription>
             <CardHeader className="px-0 pb-0 pt-3 text-center text-xl lg:text-2xl font-bold">
               {userData.email}
             </CardHeader>
-            <CardDescription className="pt-2 text-center text-xl lg:text-2xl font-semibold">
-              User
-            </CardDescription>
             <CardFooter className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-8">
               <Dialog onOpenChange={setModalClose} open={modalClose}>
                 <DialogTrigger className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer">

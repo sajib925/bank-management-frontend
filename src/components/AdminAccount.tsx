@@ -9,25 +9,57 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import {  fetchManagerData, fetchUserData } from "@/logic/apiService";
 import { useUserContext } from "@/context/userContext";
+import {useCallback, useState} from "react";
+import axios from "axios";
+import {useDropzone} from "react-dropzone";
+import Image from "next/image";
+import {CameraIcon, UserIcon} from "@/lib/icons";
 
 interface AdminFormValues {
   mobile_no: string;
   nid: string;
   age: string;
-  // religion: string;
+  religion: string;
+  image: string;
 }
 
 export const AdminUser = () => {
   const { userData ,setUserData, managerData, setManagerData} = useUserContext();
   const router = useRouter();
-  const { register, handleSubmit, formState: { errors } } = useForm<AdminFormValues>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<AdminFormValues>({
     defaultValues: {
       mobile_no: "",
       nid: "",
       age: "",
-      // religion: "",
+      religion: "",
+      image: "",
     },
   });
+
+  const [imageUrl, setImageUrl] = useState(""); // State to store the uploaded image URL
+
+  // Image upload handler using Dropzone and Cloudinary
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "my_upload_preset");
+
+    axios
+        .post("https://api.cloudinary.com/v1_1/dioutvghc/image/upload", formData)
+        .then((response) => {
+          const uploadedImageUrl = response.data.secure_url;
+          setImageUrl(uploadedImageUrl);
+          setValue("image", uploadedImageUrl);
+          toast.success("Image uploaded successfully");
+        })
+        .catch((error) => {
+          toast.error("Image upload failed");
+          console.error("Error uploading image:", error);
+        });
+  }, [setValue]);
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const mutation = useMutation({
     mutationFn: async (formData: AdminFormValues) => {
@@ -41,11 +73,6 @@ export const AdminUser = () => {
         body: JSON.stringify(formData),
       });
 
-      // if (!res.ok) {
-      //   const errorData = await res.json();
-      //   throw new Error(errorData.detail || "Error creating Admin User");
-      // }
-
       return res.json();
     },
     onSuccess: async () => {
@@ -56,7 +83,7 @@ export const AdminUser = () => {
       }
 
       toast.success("Manager created successfully");
-      router.push("/");
+      router.push("/deposit");
 
       const [ managerData] = await Promise.all([
         fetchManagerData(token),
@@ -93,21 +120,45 @@ export const AdminUser = () => {
 
   const onSubmit: SubmitHandler<AdminFormValues> = (data) => {
     mutation.mutate(data);
+    console.log(data)
   };
 
   return (
     <div className="max-w-[1000px] w-full mx-auto">
       <Card>
         <CardHeader>
-          <CardTitle className="text-center text-xl">Create Manager Account</CardTitle>
+          <CardTitle className="text-center text-xl pb-4">Create Manager Account</CardTitle>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)}>
+
+              {/* Image Upload Field */}
+              <div className="pb-5 flex items-center justify-center gap-3">
+                  <div {...getRootProps({className: "dropzone w-auto"})}>
+                    <input {...getInputProps()} />
+                      <div className='inline-flex items-center justify-center cursor-pointer'>
+                          <div className="w-auto border border-gray-200 p-2 rounded-full relative">
+                            <div className="overflow-hidden text-gray-600">
+                            {
+                              imageUrl ? (
+                                  <Image src={imageUrl} alt="Uploaded Image" className="w-20 h-20 object-cover" width={80} height={80} />
+                              ) : (
+                                  <UserIcon />
+                              )
+                            }
+                            </div>
+                            <div className='absolute top-[50%] -right-2'>
+                              <CameraIcon />
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
               <div className="pb-5 flex flex-col gap-3">
                 <Label className="text-base">Mobile No.:</Label>
                 <Input
-                  type="text"
-                  {...register("mobile_no", { required: "Mobile No. is required" })}
-                  placeholder="Mobile No."
+                    type="text"
+                    {...register("mobile_no", {required: "Mobile No. is required"})}
+                    placeholder="Mobile No."
                 />
                 {errors.mobile_no && <span>{errors.mobile_no.message}</span>}
               </div>
@@ -115,9 +166,9 @@ export const AdminUser = () => {
               <div className="pb-5 flex flex-col gap-3">
                 <Label className="text-base">NID:</Label>
                 <Input
-                  type="text"
-                  {...register("nid", { required: "NID is required" })}
-                  placeholder="National ID"
+                    type="text"
+                    {...register("nid", {required: "NID is required"})}
+                    placeholder="National ID"
                 />
                 {errors.nid && <span>{errors.nid.message}</span>}
               </div>
@@ -125,25 +176,37 @@ export const AdminUser = () => {
               <div className="pb-5 flex flex-col gap-3">
                 <Label className="text-base">Age:</Label>
                 <Input
-                  type="text"
-                  {...register("age", { required: "Age is required" })}
-                  placeholder="Age"
+                    type="text"
+                    {...register("age", {required: "Age is required"})}
+                    placeholder="Age"
                 />
                 {errors.age && <span>{errors.age.message}</span>}
               </div>
 
-              {/* <div className="pb-5 flex flex-col gap-3">
+              {/* Religion Field (Dropdown) */}
+              <div className="pb-5 flex flex-col gap-3">
                 <Label className="text-base">Religion:</Label>
-                <Input
-                  type="text"
-                  {...register("religion", { required: "Religion is required" })}
-                  placeholder="Religion"
-                />
+                <select
+                    {...register("religion", {required: "Religion is required"})}
+                    className="border rounded-md p-2"
+                >
+                  <option value="">Select Religion</option>
+                  <option value="ISLAM">Islam</option>
+                  <option value="CHRISTIANITY">Christianity</option>
+                  <option value="HINDUISM">Hinduism</option>
+                  <option value="BUDDHISM">Buddhism</option>
+                  <option value="JUDAISM">Judaism</option>
+                  <option value="ATHEISM">Atheism</option>
+                  <option value="OTHER">Other</option>
+                </select>
                 {errors.religion && <span>{errors.religion.message}</span>}
-              </div> */}
+              </div>
+
+
+
 
               <div className="flex justify-end">
-                <Button type="submit" className="w-full" disabled={mutation.isLoading}>
+                <Button type="submit" className="" disabled={mutation.isLoading}>
                   {mutation.isLoading ? "Loading..." : "Create Manager"}
                 </Button>
               </div>

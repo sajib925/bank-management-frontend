@@ -37,6 +37,9 @@ const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { userData, managerData, customerData, setUserData, setCustomerData, setManagerData } = useUserContext();
 
+  const manager = managerData?.find((m) => m.user === userData.id)
+  const customer = customerData?.find((c) => c.user === userData.id)
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -153,13 +156,36 @@ const Navbar: React.FC = () => {
                 aria-expanded={isDropdownOpen}
                 onClick={toggleDropdown}
               >
-                <Image
-                  className="w-8 h-8 rounded-full"
-                  src="/image/profi.png"
-                  alt="user photo"
-                  width={25}
-                  height={25}
-                />
+
+                {
+                  managerData && manager ? (
+                      <Image
+                          className="w-8 h-8 rounded-full"
+                          src={manager?.image || "/image/profi.png"}
+                          alt="user photo"
+                          width={25}
+                          height={25}
+                      />
+                  ) : customerData && customer ? (
+                      <Image
+                          className="w-8 h-8 rounded-full"
+                          src={customer?.image || "/image/profi.png"}
+                          alt="user photo"
+                          width={25}
+                          height={25}
+                      />
+                  ) : (
+                      <Image
+                          className="w-8 h-8 rounded-full"
+                          src="/image/profi.png" // Default image
+                          alt="user photo"
+                          width={25}
+                          height={25}
+                      />
+                  )
+                }
+
+
               </button>
               {isDropdownOpen && (
                 <div

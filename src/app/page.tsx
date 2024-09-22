@@ -7,6 +7,7 @@ import FeaturesSection2 from "@/components/Freatures2";
 import HeroSection from "@/components/HeroSection";
 import LoanManagement from "@/components/LoanManagement";
 import Navbar from "@/components/Navbar";
+import BannerSlider from "@/components/heroTest";
 
 export default function Home() {
   return (
@@ -19,6 +20,7 @@ export default function Home() {
       {/* <LoanManagement /> */}
       <FAQSection />
       <CTASection />
+      <BannerSlider />
       <Footer />
     </>
   )

@@ -15,6 +15,7 @@ import {
 } from "./ui/dialog";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { axiosInstance } from "@/lib/utils";
+import Image from "next/image";
 
 
 
@@ -89,42 +90,42 @@ const WithdrawManagement: React.FC = () => {
         <div>
           <div className="flex items-center justify-between gap-4 flex-wrap pb-4">
           <h2 className="text-2xl text-gray-600 font-bold py-8 text-center">
-            Your Withdraw Report
+            All Withdraw Report
           </h2>
-            <Dialog onOpenChange={setModalClose} open={modalClose}>
-              <DialogTrigger className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer">
-                Withdraw Money
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Withdraw Money</DialogTitle>
-                  <form onSubmit={handleWithdrawSubmit(handleWithdraw)}>
-                    <Input
-                      type="number"
-                      {...registerWithdraw("amount", {
-                        required: "Amount is required",
-                      })}
-                      placeholder="Enter amount"
-                    />
-                    <div className="flex justify-end pt-4">
-                      <button
-                        type="submit"
-                        disabled={isWithdrawing}
-                        className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer"
-                      >
-                        Withdraw
-                      </button>
-                    </div>
-                    {withdrawErrors.amount && (
-                      <p>{withdrawErrors.amount.message}</p>
-                    )}
-                    {withdrawMutation.isSuccess && (
-                      <p>Withdrawal successful!</p>
-                    )}
-                  </form>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+            {/*<Dialog onOpenChange={setModalClose} open={modalClose}>*/}
+            {/*  <DialogTrigger className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer">*/}
+            {/*    Withdraw Money*/}
+            {/*  </DialogTrigger>*/}
+            {/*  <DialogContent>*/}
+            {/*    <DialogHeader>*/}
+            {/*      <DialogTitle>Withdraw Money</DialogTitle>*/}
+            {/*      <form onSubmit={handleWithdrawSubmit(handleWithdraw)}>*/}
+            {/*        <Input*/}
+            {/*          type="number"*/}
+            {/*          {...registerWithdraw("amount", {*/}
+            {/*            required: "Amount is required",*/}
+            {/*          })}*/}
+            {/*          placeholder="Enter amount"*/}
+            {/*        />*/}
+            {/*        <div className="flex justify-end pt-4">*/}
+            {/*          <button*/}
+            {/*            type="submit"*/}
+            {/*            disabled={isWithdrawing}*/}
+            {/*            className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer"*/}
+            {/*          >*/}
+            {/*            Withdraw*/}
+            {/*          </button>*/}
+            {/*        </div>*/}
+            {/*        {withdrawErrors.amount && (*/}
+            {/*          <p>{withdrawErrors.amount.message}</p>*/}
+            {/*        )}*/}
+            {/*        {withdrawMutation.isSuccess && (*/}
+            {/*          <p>Withdrawal successful!</p>*/}
+            {/*        )}*/}
+            {/*      </form>*/}
+            {/*    </DialogHeader>*/}
+            {/*  </DialogContent>*/}
+            {/*</Dialog>*/}
           </div>
           <Card className="w-full overflow-auto">
             <table className="min-w-full divide-y divide-gray-200">
@@ -135,6 +136,9 @@ const WithdrawManagement: React.FC = () => {
                   </th>
                   <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Amount
+                  </th>
+                  <th className="pr-12 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Customers
                   </th>
                   <th className="pr-20 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Date
@@ -149,6 +153,59 @@ const WithdrawManagement: React.FC = () => {
                     </td>
                     <td className="px-6 text-center py-4 whitespace-nowrap">
                       {t.amount}
+                    </td>
+                    <td className="px-6 text-right py-4 whitespace-nowrap">
+                      <Dialog>
+                        <DialogTrigger className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer">
+                          {t.customer_name}
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle className='text-2xl lg:text-4xl text-center'>Customer Information</DialogTitle>
+                            <div className="p-2">
+                              <Image
+                                  className="w-32 h-32 rounded-full mx-auto"
+                                  src={t.customer_image ? t.customer_image : ""}
+                                  alt="user image"
+                                  width={128}
+                                  height={128}
+                              />
+                            </div>
+                            <div className="p-2">
+                              <h3 className="text-center text-xl lg:text-2xl text-gray-900 font-medium leading-8">
+                                {t.customer_name}
+                              </h3>
+                              <div className="text-center text-gray-400 text-xs font-semibold">
+                                <p>{t.customer_account_type}</p>
+                              </div>
+                              <div className="flex items-center justify-center">
+                                <table className="text-base lg:text-lg my-3">
+                                  <tbody>
+                                  <tr>
+                                    <td className="px-2 py-2 text-gray-500 font-semibold">
+                                      Account No
+                                    </td>
+                                    <td className="px-2 py-2">{t.customer_account_no}</td>
+                                  </tr>
+                                  <tr>
+                                    <td className="px-2 py-2 text-gray-500 font-semibold">
+                                      Phone
+                                    </td>
+                                    <td className="px-2 py-2">{t.customer_mobile_no}</td>
+                                  </tr>
+                                  <tr>
+                                    <td className="px-2 py-2 text-gray-500 font-semibold">
+                                      Email
+                                    </td>
+                                    <td className="px-2 py-2">{t.customer_email}</td>
+                                  </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
                     </td>
                     <td className="px-6 text-right py-4 whitespace-nowrap flex justify-end gap-2">
                       {t.timestamp}

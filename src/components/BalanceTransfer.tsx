@@ -115,7 +115,7 @@ const BalanceTransfer: React.FC = () => {
 
 
   const getMatchingTransaction = () => {
-    return customers.find((transaction:Transaction) =>
+    return customers?.find((transaction:Transaction) =>
       balanceTransferData?.data.some((account : Account) => account.account_no === transaction.recipient_account_no)
     );
   };
@@ -123,7 +123,7 @@ const BalanceTransfer: React.FC = () => {
   const matchingTransaction = getMatchingTransaction();
 
   console.log(balanceTransferData);
-  
+
   return (
       <div className="max-w-screen-xl w-full mx-auto">
         <div>

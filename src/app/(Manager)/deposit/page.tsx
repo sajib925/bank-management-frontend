@@ -1,5 +1,5 @@
 import React from 'react'
-import DepositManagemnet from '@/components/DepositManagement'
+import DepositManagement from '@/components/DepositManagement'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -25,7 +25,7 @@ const Deposit = () => {
           </BreadcrumbList>
         </Breadcrumb>
       </div>
-      <DepositManagemnet />
+      <DepositManagement />
     </div>
   )
 }

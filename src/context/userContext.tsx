@@ -20,6 +20,9 @@ interface CustomerData {
   age: string;
   monthly_income: string;
   account_no: string;
+  image: string;
+  account_type : string;
+
 }
 
 
@@ -28,6 +31,8 @@ interface ManagerData {
   email: string;
   first_name: string;
   last_name: string;
+  image : string;
+  user: number;
 }
 type Service = {
   id: number;

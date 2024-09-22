@@ -23,9 +23,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { usePathname } from "next/navigation"
+import {usePathname, useRouter} from "next/navigation"
 import Image from "next/image"
 import useLogout from "@/components/SignOut"
+import {useUserContext} from "@/context/userContext";
+import React from "react";
 
 
 export default function RootLayout({
@@ -33,6 +35,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const {userData, managerData, customerData} = useUserContext()
+  const manager = managerData.find((m) => m.user === userData.id)
+
   const pathName = usePathname()
   const logoutMutation = useLogout();
   const handleLogout = () => {
@@ -135,13 +140,25 @@ export default function RootLayout({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
-              <Image
-                  className="w-8 h-8 rounded-full"
-                  src="/image/profi.png"
-                  alt="user photo"
-                  width={25}
-                  height={25}
-                />
+                {
+                  managerData && manager ? (
+                      <Image
+                          className="w-8 h-8 rounded-full"
+                          src={manager?.image || "/image/profi.png"}
+                          alt="user photo"
+                          width={25}
+                          height={25}
+                      />
+                  ) : (
+                      <Image
+                          className="w-8 h-8 rounded-full"
+                          src="/image/profi.png"
+                          alt="user photo"
+                          width={25}
+                          height={25}
+                      />
+                  )
+                }
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>

@@ -41,20 +41,26 @@ const withdrawMoney = async (amount: number) => {
 const withdrawMoneyGet = async () => {
   return axiosInstance.get("/transactions/withdrawal/");
 };
-
+const fetchCustomers = async () => {
+  const response = await axiosInstance.get("/account/customer/");
+  return response.data;
+};
 
 const useWithdrawGet = () => useQuery("withdraw", withdrawMoneyGet);
+const useCustomers = () => useQuery("customers", fetchCustomers);
 
 const Withdraw: React.FC = () => {
+  const {userData, customerData, setCustomerData} = useUserContext()
   const [modalClose, setModalClose] = useState(false);
   const queryClient = useQueryClient();
-  const { userData } = useUserContext();
   const token = useAuthToken();
 
   const useWithdraw = () =>
     useMutation(withdrawMoney, {
       onSuccess: () => {
-        queryClient.invalidateQueries("withdraw"); 
+        queryClient.invalidateQueries("withdraw");
+        refetchCustomers();
+        setCustomerData(customers)
         toast.success("Withdrawal successful!");
         setModalClose(false);
       },
@@ -74,7 +80,12 @@ const Withdraw: React.FC = () => {
   } = useWithdrawGet();
 
 
-
+  const {
+    data: customers,
+    refetch: refetchCustomers,
+    isFetching: isFetchingCustomers,
+    error: customerError,
+  } = useCustomers();
   const handleWithdraw = async (data: { amount: number }) => {
     try {
       await withdrawMutation.mutateAsync(data.amount);
@@ -82,18 +93,22 @@ const Withdraw: React.FC = () => {
       console.error("Error withdrawing money:", error);
     }
   };
-
+  const cus = customers?.find((c: any) => c.user === userData.id);
   
   return (
     <div>
       <div className="max-w-screen-xl w-full mx-auto">
         <div>
-          <div className="flex items-center justify-between gap-4 flex-wrap pb-4">
-          <h2 className="text-2xl text-gray-600 font-bold py-8 text-center">
-            Your Withdraw Report
+          <h2 className="text-2xl font-semibold text-gray-700 pb-6 text-center">
+            Your Current Balance is: {cus?.balance} BDT
           </h2>
+          <div className="flex items-center justify-between gap-4 flex-wrap pb-4">
+            <h2 className="text-2xl text-gray-600 font-bold py-8 text-center">
+              Your Withdraw Report
+            </h2>
             <Dialog onOpenChange={setModalClose} open={modalClose}>
-              <DialogTrigger className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer">
+              <DialogTrigger
+                  className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer">
                 Withdraw Money
               </DialogTrigger>
               <DialogContent>
@@ -101,26 +116,26 @@ const Withdraw: React.FC = () => {
                   <DialogTitle>Withdraw Money</DialogTitle>
                   <form onSubmit={handleWithdrawSubmit(handleWithdraw)}>
                     <Input
-                      type="number"
-                      {...registerWithdraw("amount", {
-                        required: "Amount is required",
-                      })}
-                      placeholder="Enter amount"
+                        type="number"
+                        {...registerWithdraw("amount", {
+                          required: "Amount is required",
+                        })}
+                        placeholder="Enter amount"
                     />
                     <div className="flex justify-end pt-4">
                       <button
-                        type="submit"
-                        disabled={isWithdrawing}
-                        className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer"
+                          type="submit"
+                          disabled={isWithdrawing}
+                          className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer"
                       >
                         Withdraw
                       </button>
                     </div>
                     {withdrawErrors.amount && (
-                      <p>{withdrawErrors.amount.message}</p>
+                        <p>{withdrawErrors.amount.message}</p>
                     )}
                     {withdrawMutation.isSuccess && (
-                      <p>Withdrawal successful!</p>
+                        <p>Withdrawal successful!</p>
                     )}
                   </form>
                 </DialogHeader>
@@ -130,20 +145,20 @@ const Withdraw: React.FC = () => {
           <Card className="w-full overflow-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead>
-                <tr>
-                  <th className="pl-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Transaction Type
-                  </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Amount
-                  </th>
-                  <th className="pr-20 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date
-                  </th>
-                </tr>
+              <tr>
+                <th className="pl-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Transaction Type
+                </th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Amount
+                </th>
+                <th className="pr-20 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Date
+                </th>
+              </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {withdraw?.data.map((t: any) => (
+              {withdraw?.data.map((t: any) => (
                   <tr key={t.id}>
                     <td className="px-6 text-left py-4 whitespace-nowrap">
                       Withdraw
@@ -155,7 +170,7 @@ const Withdraw: React.FC = () => {
                       {t.timestamp}
                     </td>
                   </tr>
-                ))}
+              ))}
               </tbody>
             </table>
           </Card>

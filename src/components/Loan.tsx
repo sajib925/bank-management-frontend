@@ -113,6 +113,7 @@ const Loan: React.FC = () => {
       }
     }
   };
+console.log(loans);
 
   return (
     <div>
@@ -165,11 +166,8 @@ const Loan: React.FC = () => {
                   <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date
-                  </th>
                   <th className="pr-20 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Action
+                    Date
                   </th>
                 </tr>
               </thead>
@@ -185,47 +183,8 @@ const Loan: React.FC = () => {
                     <td className="px-6 text-center py-4 whitespace-nowrap">
                       {t.status}
                     </td>
-                    <td className="px-6 text-center py-4 whitespace-nowrap">
+                    <td className="px-6 text-right py-4 whitespace-nowrap">
                       {t.request_date}
-                    </td>
-                    <td className="px-6 text-right py-4 whitespace-nowrap flex justify-end gap-2">
-                      {t.status === "approved" && (t.amount_approved) > 0 ? (
-                        <>
-                          <Dialog onOpenChange={setModalClosePay} open={modalClosePay}>
-                            <DialogTrigger asChild>
-                              <Button onClick={() => setSelectedLoan(t.id)}>Pay Loan</Button>
-                            </DialogTrigger>
-                            <DialogContent>
-                              <DialogHeader>
-                                <DialogTitle>Repay Loan</DialogTitle>
-                                <form onSubmit={handleRepaySubmit(handleLoanRepay)}>
-                                  <Input
-                                    type="number"
-                                    {...registerRepay("amount", {
-                                      required: "Repayment amount is required",
-                                    })}
-                                    placeholder="Enter repayment amount"
-                                  />
-                                  <div className="flex justify-end pt-4">
-                                    <button
-                                      type="submit"
-                                      disabled={isRepayingLoan}
-                                      className="py-2 px-4 font-semibold rounded-sm bg-slate-900 border border-slate-900 text-white hover:text-slate-900 hover:bg-white transition-all ease-in-out cursor-pointer"
-                                    >
-                                      Repay Loan
-                                    </button>
-                                  </div>
-                                  {repayErrors.amount && <p>{repayErrors.amount.message}</p>}
-                                </form>
-                              </DialogHeader>
-                            </DialogContent>
-                          </Dialog>
-                        </>
-                      ) : t.status === "rejected" ? (
-                          <Button disabled>Rejected</Button>
-                      ) :(
-                        <Button disabled>Paid</Button>
-                      )}
                     </td>
                   </tr>
                 ))}

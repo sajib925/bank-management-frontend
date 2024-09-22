@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { useEffect } from "react"
+import React, { useEffect } from "react"
 import { useUserContext } from "@/context/userContext"
 import { usePathname } from "next/navigation"
 import Image from "next/image"
@@ -44,13 +44,14 @@ export default function RootLayout({
 
   const { userData, managerData, customerData, setUserData, setCustomerData, setManagerData } = useUserContext();
 
+  const customer = customerData.find((m) => m.user === userData.id)
 
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("authToken");
       if (token) {
         try {
-          const response = await fetch("http://127.0.0.1:8000/api/auth/update-profile/", {
+          const response = await fetch("https://bank-management-backend.onrender.com/api/auth/update-profile/", {
             method: "GET",
             headers: {
               Authorization: `Token ${token}`,
@@ -70,7 +71,7 @@ export default function RootLayout({
       const token = localStorage.getItem("authToken");
       if (token) {
         try {
-          const response = await fetch("http://127.0.0.1:8000/api/account/manager", {
+          const response = await fetch("https://bank-management-backend.onrender.com/api/account/manager", {
             method: "GET",
             headers: {
               Authorization: `Token ${token}`,
@@ -86,7 +87,7 @@ export default function RootLayout({
       const token = localStorage.getItem("authToken");
       if (token) {
         try {
-          const response = await fetch("http://127.0.0.1:8000/api/account/customer", {
+          const response = await fetch("https://bank-management-backend.onrender.com/api/account/customer", {
             method: "GET",
             headers: {
               Authorization: `Token ${token}`,
@@ -206,13 +207,25 @@ export default function RootLayout({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
-              <Image
-                  className="w-8 h-8 rounded-full"
-                  src="/image/profi.png"
-                  alt="user photo"
-                  width={25}
-                  height={25}
-                />
+                {
+                  customerData && customer ? (
+                      <Image
+                          className="w-8 h-8 rounded-full"
+                          src={customer?.image || "/image/profi.png"}
+                          alt="user photo"
+                          width={25}
+                          height={25}
+                      />
+                  ) : (
+                      <Image
+                          className="w-8 h-8 rounded-full"
+                          src="/image/profi.png"
+                          alt="user photo"
+                          width={25}
+                          height={25}
+                      />
+                  )
+                }
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
