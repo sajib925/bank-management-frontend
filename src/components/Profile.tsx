@@ -36,9 +36,8 @@ const UserProfile: React.FC = () => {
   const { userData, setUserData } = useUserContext();
   const [modalClose, setModalClose] = useState(false);
   const [modalClosePass, setModalClosePass] = useState(false);
-
-  const manager = managerData.find((m) => m.user === userData.id);
-  const customer = customerData.find((c) => c.user === userData.id);
+  const manager = Array.isArray(managerData) ? managerData.find((m) => m.user === userData.id) : null;
+  const customer = Array.isArray(customerData) ? customerData.find((c) => c.user === userData.id) : null;
   console.log(manager)
   console.log(customer)
   const {
@@ -155,7 +154,7 @@ const UserProfile: React.FC = () => {
   };
 
   const name = `${userData.first_name} ${userData.last_name}`;
-  console.log(userData)
+
 
   return (
     <div className="max-w-screen-xl w-full mx-auto px-5">

@@ -52,7 +52,7 @@ export const DevitCard = () => {
       fetchCustomerData()
     }, [setUserData, setCustomerData]);
 
-    const cus = customerData?.find((c: any) => c.user === userData.id);
+  const cus = Array.isArray(customerData) ? customerData.find((c) => c.user === userData.id) : null;
     
     const name = `${userData.first_name} ${userData.last_name}`
 

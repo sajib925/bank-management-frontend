@@ -44,7 +44,7 @@ export default function RootLayout({
 
   const { userData, managerData, customerData, setUserData, setCustomerData, setManagerData } = useUserContext();
 
-  const customer = customerData.find((m) => m.user === userData.id)
+  const customer = Array.isArray(customerData) ? customerData.find((c) => c.user === userData.id) : null;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -210,7 +210,7 @@ export default function RootLayout({
                 {
                   customerData && customer ? (
                       <Image
-                          className="w-8 h-8 rounded-full"
+                          className="w-8 h-8 object-cover rounded-full"
                           src={customer?.image || "/image/profi.png"}
                           alt="user photo"
                           width={25}

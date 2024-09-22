@@ -83,7 +83,7 @@ export const AdminUser = () => {
       }
 
       toast.success("Manager created successfully");
-      router.push("/deposit");
+      router.push("/managerDashboard");
 
       const [ managerData] = await Promise.all([
         fetchManagerData(token),
@@ -136,17 +136,17 @@ export const AdminUser = () => {
                   <div {...getRootProps({className: "dropzone w-auto"})}>
                     <input {...getInputProps()} />
                       <div className='inline-flex items-center justify-center cursor-pointer'>
-                          <div className="w-auto border border-gray-200 p-2 rounded-full relative">
-                            <div className="overflow-hidden text-gray-600">
+                          <div className="w-auto relative">
+                            <div className="overflow-hidden border border-gray-200 rounded-full text-gray-600 w-24 h-24">
                             {
                               imageUrl ? (
-                                  <Image src={imageUrl} alt="Uploaded Image" className="w-20 h-20 object-cover" width={80} height={80} />
+                                  <Image src={imageUrl} alt="Uploaded Image" className="w-full h-full object-cover" width={80} height={80} />
                               ) : (
                                   <UserIcon />
                               )
                             }
                             </div>
-                            <div className='absolute top-[50%] -right-2'>
+                            <div className='absolute top-[50%] -right-2 z-20'>
                               <CameraIcon />
                             </div>
                           </div>

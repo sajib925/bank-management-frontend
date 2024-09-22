@@ -36,7 +36,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const {userData, managerData, customerData} = useUserContext()
-  const manager = managerData.find((m) => m.user === userData.id)
+  const manager = Array.isArray(managerData) ? managerData.find((m) => m.user === userData.id) : null;
+
 
   const pathName = usePathname()
   const logoutMutation = useLogout();
@@ -151,7 +152,7 @@ export default function RootLayout({
                       />
                   ) : (
                       <Image
-                          className="w-8 h-8 rounded-full"
+                          className="w-8 h-8 object-cover rounded-full"
                           src="/image/profi.png"
                           alt="user photo"
                           width={25}

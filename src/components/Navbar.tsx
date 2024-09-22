@@ -37,8 +37,8 @@ const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { userData, managerData, customerData, setUserData, setCustomerData, setManagerData } = useUserContext();
 
-  const manager = managerData?.find((m) => m.user === userData.id)
-  const customer = customerData?.find((c) => c.user === userData.id)
+  const manager = Array.isArray(managerData) ? managerData.find((m) => m.user === userData.id) : null;
+  const customer = Array.isArray(customerData) ? customerData.find((c) => c.user === userData.id) : null;
 
 
   useEffect(() => {
@@ -168,7 +168,7 @@ const Navbar: React.FC = () => {
                       />
                   ) : customerData && customer ? (
                       <Image
-                          className="w-8 h-8 rounded-full"
+                          className="w-8 h-8 object-cover rounded-full"
                           src={customer?.image || "/image/profi.png"}
                           alt="user photo"
                           width={25}

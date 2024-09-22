@@ -84,7 +84,7 @@ export const NormalUser = () => {
         return;
       }
       toast.success("Customer Account created successfully");
-      router.push("/");
+      router.push("/customerDashboard");
 
       const [customerData] = await Promise.all([fetchCustomerData(token)]);
       const customer = customerData.find((d: any) => d.user === userData.id) ?? null;
@@ -121,11 +121,11 @@ export const NormalUser = () => {
                   <div {...getRootProps({className: "dropzone w-auto"})}>
                     <input {...getInputProps()} />
                     <div className='inline-flex items-center justify-center cursor-pointer'>
-                      <div className="w-auto border border-gray-200 p-2 rounded-full relative">
-                        <div className="overflow-hidden text-gray-600">
+                      <div className="w-auto relative">
+                        <div className="overflow-hidden border border-gray-200 rounded-full text-gray-600 w-24 h-24">
                           {
                             imageUrl ? (
-                                <Image src={imageUrl} alt="Uploaded Image" className="w-20 h-20 object-cover" width={80} height={80} />
+                                <Image src={imageUrl} alt="Uploaded Image" className="w-full h-full object-cover" width={80} height={80} />
                             ) : (
                                 <UserIcon />
                             )
