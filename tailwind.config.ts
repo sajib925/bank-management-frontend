@@ -19,8 +19,12 @@ const config = {
     },
     extend: {
       extend: {
+        backdropBlur: {
+          '5': '5px',
+        },
         backgroundImage: {
           'banner-bg': "url('/images/banner-bg.png')",
+          'custom-gradient': 'radial-gradient(231% 135.8% at .9% 2.98%, rgba(255, 255, 255, .4) 0%, rgba(255, 255, 255, 0) 100%)',
         },
         backgroundSize: {
           'auto': 'auto',

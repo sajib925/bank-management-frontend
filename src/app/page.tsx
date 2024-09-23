@@ -8,6 +8,9 @@ import HeroSection from "@/components/HeroSection";
 import LoanManagement from "@/components/LoanManagement";
 import Navbar from "@/components/Navbar";
 import BannerSlider from "@/components/heroTest";
+import CardDevitCard from "@/components/CardDevitCard";
+import WhyChooseUs from "@/components/WhyChooseUs";
+import Testimonial from "@/components/Testimonial";
 
 export default function Home() {
   return (
@@ -16,11 +19,11 @@ export default function Home() {
       <HeroSection />
       <FeaturesSection />
       <FeaturesSection2 />
-      {/* <BusinessSolutions /> */}
-      {/* <LoanManagement /> */}
+      <CardDevitCard />
+      <WhyChooseUs />
+      <Testimonial />
       <FAQSection />
       <CTASection />
-      {/*<BannerSlider />*/}
       <Footer />
     </>
   )

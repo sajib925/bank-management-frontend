@@ -23,6 +23,7 @@ interface NormalUserFormValues {
   account_type: string;
   religion: string;
   image: string;
+  occupation: string;
 }
 
 export const NormalUser = () => {
@@ -37,6 +38,7 @@ export const NormalUser = () => {
       account_type: "",
       religion: "",
       image: "",
+      occupation:"",
     },
   });
 
@@ -158,6 +160,17 @@ export const NormalUser = () => {
                       placeholder="National ID"
                   />
                   {errors.nid && <span>{errors.nid.message}</span>}
+                </div>
+
+                {/* Occupation Field */}
+                <div className="pb-5 flex flex-col gap-3">
+                  <Label className="text-base">Occupation:</Label>
+                  <Input
+                      type="text"
+                      {...register("occupation", { required: "Occupation is required" })}
+                      placeholder="Occuaption"
+                  />
+                  {errors.occupation && <span>{errors.occupation.message}</span>}
                 </div>
 
                 {/* Age Field */}
