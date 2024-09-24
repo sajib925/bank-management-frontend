@@ -35,7 +35,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const {userData, managerData, customerData} = useUserContext()
+  const {userData, managerData} = useUserContext()
   const manager = Array.isArray(managerData) ? managerData.find((m) => m.user === userData.id) : null;
 
 

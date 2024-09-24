@@ -1,10 +1,8 @@
 import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-// Define API base URL
 const API_URL = 'https://bank-management-backend.onrender.com/api';
 
-// Create an Axios instance with default configurations
 const apiClient = axios.create({
   baseURL: API_URL,
   headers: {
@@ -12,7 +10,6 @@ const apiClient = axios.create({
   },
 });
 
-// Define interfaces
 export interface UserData {
   id: number;
   email: string;
