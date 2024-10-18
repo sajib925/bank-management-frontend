@@ -1,3 +1,29 @@
+# Bank Management System Frontend
+
+This frontend for the Bank Management System provides a user-friendly interface for managing banking operations. Built with Next.js, TypeScript, and Tailwind CSS, it supports both customers and managers.
+
+## Tech Stack
+
+- **Frontend**:
+  - Next.js
+  - TypeScript
+  - Tailwind CSS
+
+## Features
+
+- Role-based authentication for managers and customers
+- Customers can manage deposits, withdrawals, balance transfers, and loan requests
+- Managers can oversee transactions and approve loan applications
+- Responsive design for optimal use on mobile and desktop devices
+
+## Installation
+
+To set up the frontend on your local machine, follow these steps:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/bank-management-frontend.git
+   cd bank-management-frontend
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
