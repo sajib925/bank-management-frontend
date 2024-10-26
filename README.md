@@ -11,17 +11,18 @@ This frontend for the Bank Management System provides a user-friendly interface 
 
 ## Project Features
 
-### User Management
-- **User Authentication**: Allows users to register, log in, and log out.
-- **Profile Management**: Users can update their profile details and change their password.
+## Features
 
-### Doctor Functionality
-- **Campaign Management**: Doctors can create, update, and manage vaccination campaigns.
-- **Vaccine Management**: Doctors can add new vaccines and manage existing ones within campaigns.
+- **Role-based Authentication**: Differentiated access for managers and customers.
+- **Customer Functionalities**:
+    - Manage deposits and withdrawals
+    - Transfer balances
+    - Request loans
+- **Manager Functionalities**:
+    - Oversee transactions
+    - Approve or reject loan applications
+- **Responsive Design**: Optimized for both mobile and desktop use.
 
-### Patient Functionality
-- **Appointment Booking**: Patients can book vaccination appointments for available campaigns.
-- **Review System**: Patients can leave reviews for specific vaccines and campaigns, sharing their feedback and experiences.
 
 - Role-based authentication for managers and customers
 - Customers can manage deposits, withdrawals, balance transfers, and loan requests
@@ -34,7 +35,7 @@ To set up the frontend on your local machine, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/sajib925/vaccine-management-frontend.git
+   git clone https://github.com/sajib925/bank-management-frontend.git
    cd bank-management-frontend
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -56,7 +57,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Ubuntu, a custom Google Font.
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Rubik, a custom Google Font.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
