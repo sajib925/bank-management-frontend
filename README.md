@@ -1,6 +1,7 @@
 # Bank Management System Frontend
 
-This frontend for the Bank Management System provides a user-friendly interface for managing banking operations. Built with Next.js, TypeScript, and Tailwind CSS, it supports both customers and managers.
+
+The Bank Management System is a web-based platform built with Next.js, TypeScript, and Tailwind CSS, offering a user-friendly interface for customers and managers. It features role-based authentication, enabling customers to manage deposits, withdrawals, and loan requests, while managers oversee transactions and approve loan applications efficiently.
 
 ## Tech Stack
 
