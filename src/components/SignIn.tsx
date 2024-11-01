@@ -7,6 +7,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { toast } from 'sonner';
+import {Card, CardDescription, CardHeader} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
 
 interface FormData {
   username: string;
@@ -16,7 +18,7 @@ interface FormData {
 const SignIn: React.FC = () => {
   const router = useRouter();
   const { setUserData, setCustomerData, setManagerData } = useUserContext();
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<FormData>();
 
   const loginMutation = useMutation(
     async (formData: FormData) => {
@@ -71,6 +73,17 @@ const SignIn: React.FC = () => {
   const onSubmit = (formData: FormData) => {
     loginMutation.mutate(formData);
   };
+
+  const handleManagerLogin = () => {
+    setValue("username", "Manager");
+    setValue("password", "123456a@");
+  };
+
+  const handleCustomerLogin = () => {
+    setValue("username", "Customer");
+    setValue("password", "123456a@");
+  };
+
 
   return (
     <div className="font-[sans-serif]">
@@ -157,6 +170,14 @@ const SignIn: React.FC = () => {
             </form>
           </div>
         </div>
+        <Card className="mt-5 max-w-[400px] w-full mx-auto flex flex-col items-center justify-center">
+          <CardHeader className="text-xl font-bold">Demo Credential</CardHeader>
+          <CardDescription className="px-2 pb-4 text-center text-lg text-gray-700">I have two types of roles Manager and Customer You can access what type you need by clicking the button below</CardDescription>
+          <div className="flex items-center justify-center gap-4 pb-4">
+            <Button onClick={handleManagerLogin}>Manager</Button>
+            <Button onClick={handleCustomerLogin}>Customer</Button>
+          </div>
+        </Card>
       </div>
     </div>
   );
